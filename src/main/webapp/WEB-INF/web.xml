@@ -16,6 +16,18 @@
   	<description></description>
   	<servlet-class>servlet.ClinicService</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ShiftServlet</servlet-name>
+  	<display-name>ShiftServlet</display-name>
+  	<description></description>
+  	<servlet-class>servlet.ShiftServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ShiftManegement</servlet-name>
+  	<display-name>ShiftManegement</display-name>
+  	<description></description>
+  	<servlet-class>servlet.ShiftManegement</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>MyPage</servlet-name>
   	<url-pattern>/MyPage</url-pattern>
@@ -23,5 +35,13 @@
   <servlet-mapping>
   	<servlet-name>ClinicService</servlet-name>
   	<url-pattern>/ClinicService</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ShiftServlet</servlet-name>
+  	<url-pattern>/ShiftServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ShiftManegement</servlet-name>
+  	<url-pattern>/ShiftManegement</url-pattern>
   </servlet-mapping>
 </web-app>

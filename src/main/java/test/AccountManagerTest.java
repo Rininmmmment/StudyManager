@@ -16,7 +16,7 @@ public class AccountManagerTest {
 		LoginInfo loginInfo1 = new LoginInfo("aaa@gmail.com", "abcde");
 		LoginInfo loginInfo2 = new LoginInfo("aaa@gmail.com", "BadPassword");
 		List<Account> accountList = accountsDAO.findAll();
-		Account account = accountManager.isEmailExist(loginInfo1, accountList);
+		Account account = accountManager.findAccount(loginInfo1, accountList);
 		System.out.println(account.getName());
 		
 		// ログインテスト

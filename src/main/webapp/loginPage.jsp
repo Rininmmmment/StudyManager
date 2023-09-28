@@ -23,7 +23,7 @@
 		<input class="form-btn" type="submit" value="サインイン">
 	</form>
 	
-	<a href="${pageContext.request.contextPath}/resettingPage.jsp">忘れたら</a><br>
-	<a href="${pageContext.request.contextPath}/registrationPage.jsp">アカウント作成</a>
+	<a href="resettingPage.jsp">パスワードを忘れたら</a><br>
+	<a href="registrationPage.jsp">アカウント作成</a>
 </body>
 </html>

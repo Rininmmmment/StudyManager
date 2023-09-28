@@ -4,7 +4,7 @@ import java.util.List;
 
 public class AccountManager {
 	// メールアドレスからアカウントが存在するか
-	public Account isEmailExist(LoginInfo loginInfo, List<Account> accountList) {
+	public static Account findAccount(LoginInfo loginInfo, List<Account> accountList) {
 		// 全探索
 		int accountListSize = accountList.size();
 		for (int i = 0; i < accountListSize; i++) {

@@ -17,7 +17,7 @@
 		<input class="email-certificate-btn" type="submit" value="認証メール送信">
 	</form>
 	
-	<a href="${pageContext.request.contextPath}/registrationPage.jsp">サインインする</a>
+	<a href="loginPage.jsp">サインインする</a>
 	
 </body>
 </html>
