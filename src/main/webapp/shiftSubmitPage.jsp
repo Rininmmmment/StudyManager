@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="model.Account,model.Shift,java.util.List" %>
+<%@ page import="model.Account,model.Shift,java.util.List, java.sql.Date, java.util.Calendar, model.FormChecker" %>
 <%
 	// リクエストスコープから取得
 	String errorMessage = (String)request.getAttribute("errorMessageLog");
 	Account loginAccount = (Account)session.getAttribute("loginAccount");
 	List<Shift> thisMonthShiftList = (List<Shift>)request.getAttribute("thisMonthShiftList");
+	List<Shift> nextMonthShiftList = (List<Shift>)request.getAttribute("nextMonthShiftList");
+	
+	// 今日の日時をcalendarにセット
+	long miliseconds = System.currentTimeMillis();
+	Date today = new Date(miliseconds);
+	Calendar calendar = Calendar.getInstance();
+	calendar.setTime(today);
 %>
 <!DOCTYPE html>
 <html>
@@ -20,21 +27,55 @@
 	<a href="#">管理</a>
 	<a href="#">パラメータ</a>
 	<a href="#">ヘルプ</a>
+	<a href="#">ログアウト</a>
 	
 	<p>来週もたくさん出勤してほしいのじゃ！</p>
 	
-	<p><%= loginAccount.getName() %>のカレンダー</p>
-	<table>
-	<tr><th>日付</th><th>開始時刻</th><th>終了時刻</th></tr>
-	<% for (int i = 0; i < thisMonthShiftList.size(); i++) { %>
-		<% Shift shift = thisMonthShiftList.get(i); %>
-		<tr>
-			<td><%= shift.getDate() %></td>
-			<td><%= shift.getStartTime() %></td>
-			<td><%= shift.getFinishTime() %></td>
-		</tr>
-	<% } %>
-	</table>
+
+	
+	<form action="DeleteServlet" method="post">
+		<p><%= loginAccount.getName() %>のカレンダー</p>
+		<p><%= calendar.get(Calendar.MONTH) + 1 %>月分</p>
+		
+		<table>
+		<tr><th></th><th>日付</th><th>開始時刻</th><th>終了時刻</th></tr>
+		<% for (int i = 0; i < thisMonthShiftList.size(); i++) { %>
+			<% Shift shift = thisMonthShiftList.get(i); %>
+			<tr>
+				<td>
+					<% FormChecker formChecker = new FormChecker(); %>
+					<% if (formChecker.findDateError(shift.getDate()).length() != 0) { %>
+						<input type="checkbox" name="deleteShiftID" value=<%= shift.getID() %> disabled>
+					<% } else { %>
+						<input type="checkbox" name="deleteShiftID" value=<%= shift.getID() %>>
+					<% } %>
+	 			</td>
+				<td><%= shift.getDate() %></td>
+				<td><%= shift.getStartTime() %></td>
+				<td><%= shift.getFinishTime() %></td>
+			</tr>
+		<% } %>
+		</table>
+
+		<p><%= calendar.get(Calendar.MONTH) + 2 %>月分</p>
+		
+		<table>
+		<tr><th></th><th>日付</th><th>開始時刻</th><th>終了時刻</th></tr>
+		<% for (int i = 0; i < nextMonthShiftList.size(); i++) { %>
+			<% Shift shift = nextMonthShiftList.get(i); %>
+				<tr>
+					<td>
+						<input type="checkbox" name="deleteShiftID" value=<%= shift.getID() %>>
+		 			</td>
+					<td><%= shift.getDate() %></td>
+					<td><%= shift.getStartTime() %></td>
+					<td><%= shift.getFinishTime() %></td>
+				</tr>
+		<% } %>
+		</table>
+		
+		<button type="submit">削除</button>
+	</form>
 	
 	
 	<p>給与計算</p>

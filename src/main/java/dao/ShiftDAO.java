@@ -18,7 +18,7 @@ public class ShiftDAO {
 	private final static String DB_USER = "admin";
 	private final static String DB_PASS = "1234";
 	
-	// 全アカウントの取得
+	// 全シフトの取得
 	public static List<Shift> findOneMonthShift(int targetUserID, Date StartDate, Date FinishDate) {
 		List<Shift> shiftList = new ArrayList<Shift>();
 		// JDBCドライバを読み込む
@@ -56,7 +56,7 @@ public class ShiftDAO {
 		return shiftList;
 	}
 	
-	// 新規アカウント作成
+	// 新規シフト作成
 	public static boolean createShift(List<Shift> shiftList) {
 		// JDBCドライバを読み込む
 		try { Class.forName("org.h2.Driver"); }
@@ -77,6 +77,35 @@ public class ShiftDAO {
 				pStmt.setTime(4, shift.getFinishTime());
 				
 				// INSERT文を実行（resultには追加された行数が代入される）
+				int result = pStmt.executeUpdate();
+				if (result != 1) return false;
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	// 新規シフト作成
+	public static boolean deleteShift(int[] shiftIDArr) {
+		// JDBCドライバを読み込む
+		try { Class.forName("org.h2.Driver"); }
+		catch (ClassNotFoundException e) { throw new IllegalStateException("JDBCドライバを読み込めませんでした"); }
+		// データベース接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+			int size = shiftIDArr.length;
+			for (int i = 0; i < size; i++) {
+				int shiftID = shiftIDArr[i];
+				// DELETE文の準備
+				String sql = "DELETE FROM SHIFT WHERE ID = ?;";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				
+				// DELETE文中の「?」に使用する値を設定しSQLを完成
+				pStmt.setInt(1, shiftID);
+				
+				// DELETE文を実行
 				int result = pStmt.executeUpdate();
 				if (result != 1) return false;
 			}

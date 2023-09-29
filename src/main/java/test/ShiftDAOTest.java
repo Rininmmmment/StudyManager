@@ -21,5 +21,9 @@ public class ShiftDAOTest {
 	    shiftList2.add(new Shift(-1, 5, Date.valueOf("2023-09-01"), Time.valueOf("18:00:00"), Time.valueOf("24:00:00")));
 	    shiftList2.add(new Shift(-1, 5, Date.valueOf("2023-09-02"), Time.valueOf("17:00:00"), Time.valueOf("24:00:00")));
 	    System.out.println(shiftDAO.createShift(shiftList2));
+	    
+	    // シフト削除テスト
+	    int[] testArr = {};
+	    shiftDAO.deleteShift(testArr);
 	}
 }
