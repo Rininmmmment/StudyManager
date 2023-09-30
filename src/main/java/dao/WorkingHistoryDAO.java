@@ -10,17 +10,17 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Shift;
+import model.WorkingHistory;
 
-public class ShiftDAO {
+public class WorkingHistoryDAO {
 //	private final String JDBC_URL = "jdbc:h2:tcp://my-h2/my-db-name";
 	private final static String JDBC_URL = "jdbc:h2:tcp://localhost/~/StudyManager";
 	private final static String DB_USER = "admin";
 	private final static String DB_PASS = "1234";
 	
-	// 全シフトの取得
-	public static List<Shift> findOneMonthShift(int targetUserID, Date StartDate, Date FinishDate) {
-		List<Shift> shiftList = new ArrayList<Shift>();
+	// 全履歴の取得
+	public static List<WorkingHistory> findOneMonthWorkingHistory(int targetUserID, Date StartDate, Date FinishDate) {
+		List<WorkingHistory> workingHistoryList = new ArrayList<WorkingHistory>();
 		// JDBCドライバを読み込む
 		try { Class.forName("org.h2.Driver"); }
 		catch (ClassNotFoundException e) { throw new IllegalStateException("JDBCドライバを読み込めませんでした"); }
@@ -28,7 +28,7 @@ public class ShiftDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 	
 			// SELECT文の準備
-			String sql = "SELECT ID, USER_ID, DATE, START_TIME, FINISH_TIME FROM SHIFT WHERE DATE BETWEEN ? AND ? AND USER_ID = ? ORDER BY DATE;"; // 日付順に取得
+			String sql = "SELECT ID, USER_ID, DATE, START_TIME, FINISH_TIME FROM WORKING_HISTORY WHERE DATE BETWEEN ? AND ? AND USER_ID = ? ORDER BY DATE;"; // 日付順に取得
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			// INSERT文中の「?」に使用する値を設定しSQLを完成
 			pStmt.setDate(1, StartDate);
@@ -45,74 +45,36 @@ public class ShiftDAO {
 				Date date = rs.getDate("DATE");
 				Time startTime = rs.getTime("START_TIME");
 				Time finishTime = rs.getTime("FINISH_TIME");
-				Shift shift = new Shift(ID, userID, date, startTime, finishTime);
-				shiftList.add(shift);
+				WorkingHistory workingHistory = new WorkingHistory(ID, userID, date, startTime, finishTime);
+				workingHistoryList.add(workingHistory);
 			}
 	    }
 		catch (SQLException e) {
 	    	e.printStackTrace();
 	      return null;
 		}
-		return shiftList;
+		return workingHistoryList;
 	}
 	
-	// 今日のシフト取得
-	public static List<Shift> findTodayShift(int targetUserID) {
-		List<Shift> shiftList = new ArrayList<Shift>();
+	// 勤務履歴登録
+	public static boolean createWorkingHistory(List<WorkingHistory> workingHistoryList) {
 		// JDBCドライバを読み込む
 		try { Class.forName("org.h2.Driver"); }
 		catch (ClassNotFoundException e) { throw new IllegalStateException("JDBCドライバを読み込めませんでした"); }
 		// データベース接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			// SELECT文の準備
-			long miliseconds = System.currentTimeMillis();
-			Date today = new Date(miliseconds);
-			String sql = "SELECT ID, USER_ID, DATE, START_TIME, FINISH_TIME FROM SHIFT WHERE DATE = ? AND USER_ID = ? ORDER BY START_TIME;"; // 日付順に取得
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-			// INSERT文中の「?」に使用する値を設定しSQLを完成
-			pStmt.setDate(1, today);
-			pStmt.setInt(2, targetUserID);
-	
-			// SELECTを実行
-			ResultSet rs = pStmt.executeQuery();
-	
-			// SELECT文の結果をArrayListに格納
-			while (rs.next()) {
-				int ID = rs.getInt("ID");
-				int userID = rs.getInt("USER_ID");
-				Date date = rs.getDate("DATE");
-				Time startTime = rs.getTime("START_TIME");
-				Time finishTime = rs.getTime("FINISH_TIME");
-				Shift shift = new Shift(ID, userID, date, startTime, finishTime);
-				shiftList.add(shift);
-			}
-	    }
-		catch (SQLException e) {
-	    	e.printStackTrace();
-	      return null;
-		}
-		return shiftList;
-	}
-	
-	// 新規シフト作成
-	public static boolean createShift(List<Shift> shiftList) {
-		// JDBCドライバを読み込む
-		try { Class.forName("org.h2.Driver"); }
-		catch (ClassNotFoundException e) { throw new IllegalStateException("JDBCドライバを読み込めませんでした"); }
-		// データベース接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			int size = shiftList.size();
+			int size = workingHistoryList.size();
 			for (int i = 0; i < size; i++) {
-				Shift shift = shiftList.get(i);
+				WorkingHistory workingHistory = workingHistoryList.get(i);
 				// INSERT文の準備
-				String sql = "INSERT INTO SHIFT (USER_ID, DATE, START_TIME, FINISH_TIME) VALUES (?, ?, ?, ?);";
+				String sql = "INSERT INTO WORKING_HISTORY (USER_ID, DATE, START_TIME, FINISH_TIME) VALUES (?, ?, ?, ?);";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				
 				// INSERT文中の「?」に使用する値を設定しSQLを完成
-				pStmt.setInt(1, shift.getUserID());
-				pStmt.setDate(2, shift.getDate());
-				pStmt.setTime(3, shift.getStartTime());
-				pStmt.setTime(4, shift.getFinishTime());
+				pStmt.setInt(1, workingHistory.getUserID());
+				pStmt.setDate(2, workingHistory.getDate());
+				pStmt.setTime(3, workingHistory.getStartTime());
+				pStmt.setTime(4, workingHistory.getFinishTime());
 				
 				// INSERT文を実行（resultには追加された行数が代入される）
 				int result = pStmt.executeUpdate();
@@ -126,22 +88,22 @@ public class ShiftDAO {
 		return true;
 	}
 	
-	// シフト削除
-	public static boolean deleteShift(int[] shiftIDArr) {
+	// 勤務履歴削除
+	public static boolean deleteWorkingHistory(int[] workingHistoryIDArr) {
 		// JDBCドライバを読み込む
 		try { Class.forName("org.h2.Driver"); }
 		catch (ClassNotFoundException e) { throw new IllegalStateException("JDBCドライバを読み込めませんでした"); }
 		// データベース接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
-			int size = shiftIDArr.length;
+			int size = workingHistoryIDArr.length;
 			for (int i = 0; i < size; i++) {
-				int shiftID = shiftIDArr[i];
+				int workingHistoryID = workingHistoryIDArr[i];
 				// DELETE文の準備
-				String sql = "DELETE FROM SHIFT WHERE ID = ?;";
+				String sql = "DELETE FROM WORKING_HISTORY WHERE ID = ?;";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				
 				// DELETE文中の「?」に使用する値を設定しSQLを完成
-				pStmt.setInt(1, shiftID);
+				pStmt.setInt(1, workingHistoryID);
 				
 				// DELETE文を実行
 				int result = pStmt.executeUpdate();

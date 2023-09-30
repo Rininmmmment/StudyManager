@@ -21,13 +21,7 @@
 <title>シフト提出</title>
 </head>
 <body>
-	<a href="#">出勤</a>
-	<a href="#">シフト</a>
-	<a href="#">Cafe</a>
-	<a href="#">管理</a>
-	<a href="#">パラメータ</a>
-	<a href="#">ヘルプ</a>
-	<a href="#">ログアウト</a>
+	<%@include file = "menuBar.jsp" %>
 	
 	<p>来週もたくさん出勤してほしいのじゃ！</p>
 	

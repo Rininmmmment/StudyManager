@@ -28,6 +28,18 @@
   	<description></description>
   	<servlet-class>servlet.ShiftManegement</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>Working</servlet-name>
+  	<display-name>Working</display-name>
+  	<description></description>
+  	<servlet-class>servlet.Working</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>Leaved</servlet-name>
+  	<display-name>Leaved</display-name>
+  	<description></description>
+  	<servlet-class>servlet.Leaved</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>MyPage</servlet-name>
   	<url-pattern>/MyPage</url-pattern>
@@ -43,5 +55,13 @@
   <servlet-mapping>
   	<servlet-name>ShiftManegement</servlet-name>
   	<url-pattern>/ShiftManegement</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Working</servlet-name>
+  	<url-pattern>/Working</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>Leaved</servlet-name>
+  	<url-pattern>/Leaved</url-pattern>
   </servlet-mapping>
 </web-app>

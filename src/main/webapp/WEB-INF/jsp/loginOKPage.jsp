@@ -8,7 +8,7 @@
 </head>
 <body>
 サインイン完了
-<a href="#">出勤ページ</a>
+<a href="BeforeWork">出勤ページ</a>
 <a href="ShiftManagement">シフト管理ページ</a>
 </body>
 </html>

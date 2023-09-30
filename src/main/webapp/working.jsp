@@ -25,7 +25,7 @@
 <body>
 	<%@include file = "menuBar.jsp" %>
 	
-	<p><%= bossMessage.generateMessage("before") %></p>
+	<p><%= bossMessage.generateMessage("working") %></p>
 	
 	<p>今日のシフト</p>
 	<% for (int i = 0; i < todayShiftList.size(); i++) { %>
@@ -37,8 +37,8 @@
 	<h3><%= calendar.get(Calendar.YEAR) %>年 <%= calendar.get(Calendar.MONTH)+1 %>月 <%= calendar.get(Calendar.DATE) %>日 <%= calendarManager.getDayOfWeek(calendar) %></h3>
 	<h1><%= calendar.getTime().getHours() %>：<%= calendar.getTime().getMinutes() %></h1>
 	
-	<a href="Working">出勤</a>
-	<a tabindex="-1">退勤</a>
+	<a tabindex="-1">出勤</a>
+	<a href="Leaved">退勤</a>
 
 </body>
 </html>
