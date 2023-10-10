@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+div.shulack {
+	height: 500px;
+	border: 0.5px solid #888;
+	border-radius: 10px;
+	box-shadow: 0px 0px 5px -3px #aaa;
+}
+
+div.shulack-header {
+	border-bottom: 0.5px solid #aaa;
+	padding: 14px 30px;
+}
+
+div.shulack-header > h2 {
+	font-size: 13px;
+	padding-bottom: 6px;
+}
+
+div.shulack-header > p {
+	font-size: 8px;
+}
+
+div.shulack-message {
+	height: 330px;
+	border-bottom: 0.5px solid #aaa;
+}
+
+div.shulack-input {
+	border-bottom: 0.5px solid #aaa;
+	padding: 10px 0;
+}
+
+div.shulack-input > form {
+	width: 90%;
+	margin: 5px auto;
+	position: relative;
+}
+
+div.shulack-input > form > textarea {
+	display: inline-block;
+	border: none;
+	overflow:hidden;
+	resize: none;
+	width: 85%;
+}
+
+div.shulack-input > form > textarea:focus {
+	outline: none;
+}
+
+div.shulack-input > form > button {
+	height: 30px;
+	width: 30px;
+	border: none;
+	display: inline-block;
+	position:  absolute;
+	top: 5px;
+	right: 5px;
+	background-color: #fff;
+	color: #999;
+}
+
+div.shulack-input > form > button:hover {
+	cursor : pointer;
+	color: #ccc;
+}
+
+::before {
+  transition: .3s cubic-bezier(0.45, 0, 0.55, 1);
+}

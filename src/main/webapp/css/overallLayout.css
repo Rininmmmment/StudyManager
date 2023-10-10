@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+/* 全体の設定 */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	display: inline-block;
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+/* mainとnavの配置 */
+.nav-main-container {
+	display: flex;
+}
+
+/* mainの共通設定 */
+main {
+	width: 1050px;
+	overflow: scroll;
+}
+main::-webkit-scrollbar {
+	display: none;
+}
+
+.title-container {
+	height: 44px;
+}
+
+h1.title {
+	font-size: 22px;
+	padding: 11px 18px;
+}
+
+.cat-container {
+	border: 0.5px solid #dddddd;
+	background: rgb(250, 250, 250);
+	padding: 11px 18px;
+}
+
+p.cat {
+	font-size: 11px;
+	color: rgb(143, 143, 143);
+}

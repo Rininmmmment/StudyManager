@@ -9,21 +9,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>サインイン / Study Manager</title>
+<title>ログイン / Study Manager</title>
 </head>
 <body>
-	<form action="LoginServlet" method="post">
-		<% if (errorMessage != null) { %>
-			<p><%= errorMessage %></p>
-		<% } %>
-		メールアドレス：
-		<input type="text" name="email"><br>
-		パスワード：
-		<input type="text" name="pass"><br>
-		<input class="form-btn" type="submit" value="サインイン">
-	</form>
+	<header>
 	
-	<a href="resettingPage.jsp">パスワードを忘れたら</a><br>
-	<a href="registrationPage.jsp">アカウント作成</a>
+	</header>
+	
+	<div>
+		<p>Study Manager</p>
+		<h1>ログイン</h1>
+	</div>
+	
+	<div>
+		<form action="LoginServlet" method="post">
+			<% if (errorMessage != null) { %>
+				<p><%= errorMessage %></p>
+			<% } %>
+			<p>メールアドレス</p>
+			<input type="email" name="email"><br>
+			<p>パスワード</p>
+			<input type="password" name="pass"><br>
+			<input class="form-btn" type="submit" value="ログイン">
+			<p><a href="resettingPage.jsp">パスワードを忘れた</a></p>
+			<p><a href="registrationPage.jsp">アカウント作成</a></p>
+		</form>
+	</div>
+	
+		
+
 </body>
 </html>

@@ -28,7 +28,7 @@ public class WorkingHistoryDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 	
 			// SELECT文の準備
-			String sql = "SELECT ID, USER_ID, DATE, START_TIME, FINISH_TIME FROM WORKING_HISTORY WHERE DATE BETWEEN ? AND ? AND USER_ID = ? ORDER BY DATE;"; // 日付順に取得
+			String sql = "SELECT ID, USER_ID, DATE, START_TIME, FINISH_TIME, START_SHULACK, FINISH_SHULACK FROM WORKING_HISTORY WHERE DATE BETWEEN ? AND ? AND USER_ID = ? ORDER BY DATE;"; // 日付順に取得
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			// INSERT文中の「?」に使用する値を設定しSQLを完成
 			pStmt.setDate(1, StartDate);
@@ -45,7 +45,9 @@ public class WorkingHistoryDAO {
 				Date date = rs.getDate("DATE");
 				Time startTime = rs.getTime("START_TIME");
 				Time finishTime = rs.getTime("FINISH_TIME");
-				WorkingHistory workingHistory = new WorkingHistory(ID, userID, date, startTime, finishTime);
+				String startShulack = rs.getString("START_SHULACK");
+				String finishShulack = rs.getString("FINISH_SHULACK");
+				WorkingHistory workingHistory = new WorkingHistory(ID, userID, date, startTime, finishTime, startShulack, finishShulack);
 				workingHistoryList.add(workingHistory);
 			}
 	    }
@@ -67,7 +69,7 @@ public class WorkingHistoryDAO {
 			for (int i = 0; i < size; i++) {
 				WorkingHistory workingHistory = workingHistoryList.get(i);
 				// INSERT文の準備
-				String sql = "INSERT INTO WORKING_HISTORY (USER_ID, DATE, START_TIME, FINISH_TIME) VALUES (?, ?, ?, ?);";
+				String sql = "INSERT INTO WORKING_HISTORY (USER_ID, DATE, START_TIME, FINISH_TIME, START_SHULACK, FINISH_SHULACK) VALUES (?, ?, ?, ?, ?, ?);";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				
 				// INSERT文中の「?」に使用する値を設定しSQLを完成
@@ -75,6 +77,8 @@ public class WorkingHistoryDAO {
 				pStmt.setDate(2, workingHistory.getDate());
 				pStmt.setTime(3, workingHistory.getStartTime());
 				pStmt.setTime(4, workingHistory.getFinishTime());
+				pStmt.setString(5, workingHistory.getStartShulack());
+				pStmt.setString(6, workingHistory.getFinishShulack());
 				
 				// INSERT文を実行（resultには追加された行数が代入される）
 				int result = pStmt.executeUpdate();

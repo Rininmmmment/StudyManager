@@ -21,7 +21,7 @@
 <title>シフト提出</title>
 </head>
 <body>
-	<%@include file = "menuBar.jsp" %>
+	<%@include file = "WEB-INF/jsp/menuBar.jsp" %>
 	
 	<p>来週もたくさん出勤してほしいのじゃ！</p>
 	

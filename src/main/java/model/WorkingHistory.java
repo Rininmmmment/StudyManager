@@ -9,14 +9,18 @@ public class WorkingHistory implements Serializable {
 	private Date date;
 	private Time startTime;
 	private Time finishTime;
+	private String startShulack;
+	private String finishShulack;
 	
 	public WorkingHistory() { }
-	public WorkingHistory(int ID, int userID, Date date, Time startTime, Time finishTime) {
+	public WorkingHistory(int ID, int userID, Date date, Time startTime, Time finishTime, String startShulack, String finishShulack) {
 		this.ID = ID;
 		this.userID = userID;
 		this.date = date;
 		this.startTime = startTime;
 		this.finishTime = finishTime;
+		this.startShulack = startShulack;
+		this.finishShulack = finishShulack;
 	}
 	
 	public int getID() { return ID; }
@@ -29,4 +33,8 @@ public class WorkingHistory implements Serializable {
 	public void setStartTime(Time startTime) { this.startTime = startTime; }
 	public Time getFinishTime() { return finishTime; }
 	public void setFinishTime(Time finishTime) { this.finishTime = finishTime; }
+	public String getStartShulack() { return startShulack; }
+	public void setStartShulack(String startShulack) { this.startShulack = startShulack; }
+	public String getFinishShulack() { return finishShulack; }
+	public void setFinishShulack(String finishShulack) { this.finishShulack = finishShulack; }
 }

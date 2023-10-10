@@ -52,7 +52,7 @@ public class ShiftManegement extends HttpServlet {
 			request.setAttribute("thisMonthShiftList", thisMonthShiftList);
 			request.setAttribute("nextMonthShiftList", nextMonthShiftList);
 			// フォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("shiftSubmitPage.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/shiftSubmitPage.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
@@ -89,7 +89,7 @@ public class ShiftManegement extends HttpServlet {
 				if (errorMessage.length() != 0) {
 					// エラーメッセージ表示
 					request.setAttribute("errorMessageLog", errorMessage);
-					RequestDispatcher dispatcher = request.getRequestDispatcher("shiftSubmitPage.jsp");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/shiftSubmitPage.jsp");
 					dispatcher.forward(request, response);
 				}
 				// 入力値にエラーがない場合
@@ -122,7 +122,7 @@ public class ShiftManegement extends HttpServlet {
 			request.setAttribute("nextMonthShiftList", nextMonthShiftList);
 			
 			// シフトページへフォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("shiftSubmitPage.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/shiftSubmitPage.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

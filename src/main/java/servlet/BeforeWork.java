@@ -35,7 +35,7 @@ public class BeforeWork extends HttpServlet {
 		}
 			
 		// フォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("goToWork.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/goToWork.jsp");
 		dispatcher.forward(request, response);
 	}
 }

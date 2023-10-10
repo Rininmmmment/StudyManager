@@ -35,20 +35,25 @@ public class Leaved extends HttpServlet {
 			ServletContext application = this.getServletContext();
 			try { // 勤務履歴登録
 				Time startTime = (Time)application.getAttribute("startTime");
-				
+				String startShulack = (String)application.getAttribute("startShulack");
+				String finishShulack = (String)application.getAttribute("finishShulack");
+				System.out.println(startShulack + finishShulack);
+				// 現在日時取得
 				long miliseconds = System.currentTimeMillis();
 				Date now = new Date(miliseconds);
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTime(now);
-				
+				// 勤務履歴登録用のデータ
 				Date today = Date.valueOf(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DATE));
 				Time finishTime = Time.valueOf(calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + ":00");
-				
-				WorkingHistory workingHistory = new WorkingHistory(-1, loginAccount.getID(), today, startTime, finishTime);
+				// 登録
+				WorkingHistory workingHistory = new WorkingHistory(-1, loginAccount.getID(), today, startTime, finishTime, startShulack, finishShulack);
 				List<WorkingHistory> workingHistoryList = new ArrayList<WorkingHistory>(Arrays.asList(workingHistory));
-				WorkingHistoryDAO workingHistoryDAO = new WorkingHistoryDAO();
 				WorkingHistoryDAO.createWorkingHistory(workingHistoryList);
-				System.out.println("退勤登録できたよ〜");
+				application.removeAttribute("startTime"); // アプリケーションスコープからインスタンス削除
+				application.removeAttribute("startShulack");
+				application.removeAttribute("finishShulack");
+				System.out.println("退勤登録・インスタンス削除できたよ〜");
 			}
 			catch (Exception e) { // 出勤ページへ飛ばす
 				response.sendRedirect("BeforeWork");
